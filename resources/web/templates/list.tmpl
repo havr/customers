@@ -1,0 +1,110 @@
+{{define "list"}}
+<html>
+  <head>
+    {{ template "head" . }}
+  </head>
+  <body>
+  <div class="btn-group">
+    <form action="/generate?redirect=true" method="post">
+        <button class="btn btn-default" type="submit"> Spawn More </button>
+    </form>
+  </div>
+  <div class="btn-group">
+    <form action="/ui/customer/create" method="get">
+        <button type="submit" class="btn btn-primary">  Create New </button>
+    </form>
+  </div>
+    <form action="/ui/customer/list">
+      <div class="row">
+        <div class="col-md-2">
+            <label for="firstName"> First Name: </label>
+            <input name="firstName" class="form-control" id="firstName" value="{{ .Filter.FirstName }}">  </input>
+        </div>
+        <div class="col-md-2">
+            <label for="lastName"> Last Name: </label>
+            <input name="lastName" class="form-control" id="lastName" value="{{ .Filter.LastName }}">  </input>
+        </div>
+        <div class="col-md-2">
+            <label for="orderBy"> Field: </label>
+            <select name="orderBy" class="form-control" id="orderBy">
+                <option disabled hidden style='display: none' value=''></option>
+                <option value="firstName" {{if eq "firstName" .OrderBy}} selected {{end}}>First Name</option>
+                <option value="lastName" {{if eq "lastName" .OrderBy}} selected {{end}}>Last Name</option>
+                <option value="birthDate" {{if eq "birthDate" .OrderBy}} selected {{end}}>Birth Date</option>
+                <option value="gender" {{if eq "gender" .OrderBy}} selected {{end}}>Gender</option>
+                <option value="email" {{if eq "email" .OrderBy}} selected {{end}}>Email</option>
+                <option value="address" {{if eq "address" .OrderBy}} selected {{end}}>Address</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="orderDesc"> Order: </label>
+            <select name="orderDesc" class="form-control" id="orderDesc">
+                <option disabled hidden style='display: none' value=''></option>
+                <option value="true" {{if .OrderDesc}} selected {{end}}> Descending <option>
+                <option value="false" {{if not .OrderDesc}} selected {{end}}> Ascending </option>
+            </select>
+        </div>
+         <div class="col-md-1">
+             <button class="btn btn-primary search-btn" type="submit"> Search </button>
+         </div>
+      </div>
+    </form>
+
+    <b> {{.Error}} </b>
+    <table class="table table-hover">
+        <tr>
+            <th scope="column"> First Name </th>
+            <th scope="column"> Second Name </th>
+            <th scope="column"> Gender </th>
+            <th scope="column"> Birth Date </th>
+            <th scope="column"> Email </th>
+            <th scope="column"> Address </th>
+            <th scope="column"> Actions </th>
+        </tr>
+        {{range .Customers}}
+        <tr>
+            <td> {{.FirstName}} </td>
+            <td> {{.LastName}} </td>
+            <td> {{.Gender}} </td>
+            <td> {{.BirthDate}} </td>
+            <td> {{.Email}} </td>
+            <td> {{.Address}} </td>
+            <td>
+                <div class="btn-group">
+                    <form action="/ui/customer/view/{{.ID}}" method="GET">
+                        <button data-id="{{.ID}}" class="btn btn-default"> View </button>
+                    </form>
+                </div>
+                <div class="btn-group">
+                    <form action="/ui/customer/delete/{{.ID}}" method="POST">
+                        <button data-id="{{.ID}}" class="btn btn-danger"> &times; </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+    <nav class="flex justify-content-center">
+        <ul class="pagination">
+        {{range .Pages}}
+            <li class="page-item {{if .Disabled}} disabled {{end}} {{if .Current}} active {{end}}">
+            {{if or .Disabled .Current}}
+                <span class="page-link"> {{.Title}} </span>
+            {{else}}
+                <a class="page-link" href="{{.Link}}"> {{.Title}} </a>
+            {{end}}
+            </li>
+        {{end}}
+        </ul>
+    </nav>
+   </body>
+   <script>
+   function onView(element) {
+       window.location.href = '/ui/customer/view/' + element.dataset.id;
+   }
+   function onDelete(element) {
+       window.location.href = '/ui/customer/delete/' + element.dataset.id;
+   }
+   </script>
+</html>
+{{end}}

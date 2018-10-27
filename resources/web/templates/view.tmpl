@@ -1,0 +1,38 @@
+{{define "view"}}
+<html>
+  <head>
+    {{ template "head" . }}
+  </head>
+  <body>
+    <form action="/ui/customer/list" method="get">
+        <button type="submit" class="btn btn-default"> List All </button>
+    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td> First name </td> <td> {{.Customer.FirstName}} </td>
+                </tr>
+                <tr>
+                    <td> Last Name </td> <td> {{.Customer.LastName}} </td>
+                </tr>
+                <tr>
+                    <td> Birth Date </td> <td> {{.Customer.BirthDate}} </td>
+                </tr>
+                <tr>
+                    <td> Gender </td> <td> {{.Customer.Gender}} </td>
+                </tr>
+                <tr>
+                    <td> Email </td> <td> {{.Customer.Email}} </td>
+                </tr>
+                <tr>
+                    <td> Address </td> <td> {{.Customer.Address}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <form action="/ui/customer/edit/{{.Customer.ID}}" method="get">
+        <button class="btn btn-primary" type="submit" > Edit </input>
+    </form>
+</html>
+{{end}}

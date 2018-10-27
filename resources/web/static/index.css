@@ -1,0 +1,19 @@
+body {
+    margin: 5px;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.search-btn {
+    margin-top: 26px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

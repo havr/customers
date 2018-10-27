@@ -1,0 +1,70 @@
+{{define "create_edit"}}
+<html>
+  <head>
+    {{ template "head" . }}
+  </head>
+  <body>
+    <div class="btn-group">
+      <form action="/ui/customer/list" method="get">
+          <button class="btn btn-default" type="submit"> List All </button>
+      </form>
+    </div>
+    <div class="btn-group">
+      {{if .Edit}}
+          <form action="/ui/customer/view/{{.Customer.ID}}" method="get">
+              <button type="submit" class="btn btn-default"> View Current </button>
+          </form>
+      {{end}}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{if .Error}}
+                <div class="alert alert-warning">
+                    {{.Error}}
+                </div>
+            {{end}}
+
+            {{if .Edit}}
+                <form action="/ui/customer/edit/{{.Customer.ID}}" method="post">
+            {{else}}
+                <form action="/ui/customer/create" method="post">
+            {{end}}
+                <input type="hidden" name="revision" value="{{.Customer.Revision}}" />
+                <div class="form-group">
+                    <label for="firstName"> First Name </label>
+                    <input name="firstName" class="form-control" id="firstName" value="{{.Customer.FirstName}}" />
+                </div>
+                <div class="form-group">
+                    <label for="lastName"> Last Name </label>
+                    <input name="lastName" class="form-control" id="lastName" value="{{.Customer.LastName}}" />
+                </div>
+                <div class="form-group">
+                    <label for="birthDate"> Birthday </label>
+                    <input name="birthDate" class="form-control" id="birthDate" value="{{jsDate .Customer.BirthDate }}" />
+                </div>
+                <div class="form-group">
+                    <label for="gender"> Gender </label>
+                    <select name="gender" id="gender" class="form-control">
+                        <option value="Male" {{if eq "Male" .Customer.Gender}} selected {{end}}>Male</option>
+                        <option value="Female" {{if eq "Female" .Customer.Gender}} selected {{end}}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email"> Email </label>
+                    <input name="email" id="email" value="{{.Customer.Email}}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="address"> Address </label>
+                    <input name="address" id="address" value="{{.Customer.Address}}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        {{if .Edit}} Edit {{else}} Create {{end}}
+                     </input>
+                </div>
+            </form>
+        </div>
+    </div>
+</html>
+{{end}}
