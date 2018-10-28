@@ -5,7 +5,7 @@ CREATE TABLE customers (
     id SERIAL,
     firstname VARCHAR(100) NOT NULL,
     lastname VARCHAR(100) NOT NULL,
-    birthdate TIMESTAMP WITH TIME ZONE NOT NULL,
+    birthdate TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     gender VARCHAR(6) NOT NULL,
     email VARCHAR(254) NOT NULL,
     address VARCHAR(200) NOT NULL,

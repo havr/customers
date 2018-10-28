@@ -21,12 +21,12 @@ func IsValidGender(gender string) bool {
 
 // Customer represents a basic info for a customer
 type Customer struct {
-	ID        int       `json:"id"`
-	Revision  int       `json:"revision"`
-	FirstName string    `json:"firstName"`
-	LastName  string    `json:"lastName"`
-	BirthDate time.Time `json:"birthDate"`
-	Gender    Gender    `json:"gender"`
-	Email     string    `json:"email"`
-	Address   string    `json:"address"`
+	ID        int
+	Revision  int
+	FirstName string
+	LastName  string
+	BirthDate time.Time
+	Gender    Gender
+	Email     string
+	Address   string
 }

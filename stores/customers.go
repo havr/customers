@@ -26,20 +26,6 @@ var selectExpr = func() []string {
 // ErrChanged occurs when one tries to update an object that has been modified since initial read
 var ErrChanged = fmt.Errorf("the object has been changed")
 
-// CustomerViewOptions defines ordering and pagination for list results
-type CustomerViewOptions struct {
-	OrderBy   string
-	OrderDesc bool
-	Offset    int
-	Limit     int
-}
-
-// CustomerListFilter represents filtering options
-type CustomerListFilter struct {
-	FirstName string
-	LastName  string
-}
-
 // NewCustomerStore creates new customer store for the given database connection
 func NewCustomerStore(db *sql.DB) CustomerStore {
 	return &customerStore{
@@ -76,19 +62,20 @@ func (c *customerStore) CountCustomers(ctx context.Context, filter CustomerListF
 
 // filterWhere formats a WHERE query part that corresponds the given filter and appends values to filter in query args
 func (c *customerStore) filterWhere(filter CustomerListFilter, args []interface{}) (string, []interface{}) {
-	if filter.LastName == "" && filter.FirstName == "" {
-		return "", args
-	}
+	resultArgs := args
 	var whereConditions []string
 	if filter.FirstName != "" {
-		args = append(args, filter.FirstName+"%")
-		whereConditions = append(whereConditions, fmt.Sprintf("lower(firstName) LIKE lower($%d)", len(args)))
+		resultArgs = append(resultArgs, filter.FirstName+"%")
+		whereConditions = append(whereConditions, fmt.Sprintf("firstName ILIKE $%d", len(resultArgs)))
 	}
 	if filter.LastName != "" {
-		args = append(args, filter.LastName+"%")
-		whereConditions = append(whereConditions, fmt.Sprintf("lower(lastName) LIKE lower($%d)", len(args)))
+		resultArgs = append(resultArgs, filter.LastName+"%")
+		whereConditions = append(whereConditions, fmt.Sprintf("lastName ILIKE $%d", len(resultArgs)))
 	}
-	return "WHERE " + strings.Join(whereConditions, " AND "), args
+	if len(whereConditions) == 0 {
+		return "", args
+	}
+	return "WHERE " + strings.Join(whereConditions, " AND "), resultArgs
 }
 
 // ListCustomers returns a list of customers that match the given filter and view options
@@ -156,8 +143,8 @@ func (c *customerStore) UpdateCustomer(ctx context.Context, customer models.Cust
 	defer func() {
 		if gerr != nil {
 			tx.Rollback()
-		} else {
-			tx.Commit()
+		} else if err := tx.Commit(); err != nil {
+			gerr = err
 		}
 	}()
 	row := tx.QueryRowContext(ctx, "SELECT xmin FROM "+CustomerTable+" WHERE id = $1", customer.ID)
@@ -201,6 +188,7 @@ func (c *customerStore) scanRow(ctx context.Context, scanner rowScanner) (result
 	if err := scanner.Scan(&result.ID, &result.Revision, &result.LastName, &result.FirstName, &result.BirthDate, &result.Gender, &result.Email, &result.Address); err != nil {
 		return models.Customer{}, err
 	}
+	result.BirthDate = result.BirthDate.UTC()
 	return
 }
 
