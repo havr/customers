@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"os"
 	"sort"
+	"strings"
 	"testing"
 	"time"
 
@@ -129,13 +130,13 @@ type filtered struct {
 	comboName map[[2]string][]models.Customer
 }
 
-func ditributeFiltered(customers map[models.Customer]bool) (filtered filtered) {
+func distributeFiltered(customers map[models.Customer]bool) (filtered filtered) {
 	filtered.firstName = make(map[string][]models.Customer)
 	filtered.lastName = make(map[string][]models.Customer)
 	filtered.comboName = make(map[[2]string][]models.Customer)
 	for customer := range customers {
-		fn := string(customer.FirstName[0])
-		ln := string(customer.LastName[0])
+		fn := strings.ToLower(string(customer.FirstName[0]))
+		ln := strings.ToUpper(string(customer.LastName[0]))
 		filtered.firstName[fn] = append(filtered.firstName[fn], customer)
 		filtered.lastName[ln] = append(filtered.lastName[ln], customer)
 		comboKey := [2]string{fn, ln}
@@ -147,7 +148,7 @@ func ditributeFiltered(customers map[models.Customer]bool) (filtered filtered) {
 func tFilterAndCount(t *testing.T, store stores.CustomerStore) {
 	ctx := context.Background()
 	customers := spawnCustomers(t, ctx, store, 100)
-	filtered := ditributeFiltered(customers)
+	filtered := distributeFiltered(customers)
 	for fn, expect := range filtered.firstName {
 		count, err := store.CountCustomers(ctx, stores.CustomerListFilter{FirstName: fn})
 		require.NoError(t, err)
@@ -217,7 +218,7 @@ func sortByDate(customers []models.Customer, desc bool) {
 func tListAndCount(t *testing.T, store stores.CustomerStore) {
 	ctx := context.Background()
 	customers := spawnCustomers(t, ctx, store, 100)
-	filtered := ditributeFiltered(customers)
+	filtered := distributeFiltered(customers)
 	for fn, list := range filtered.firstName {
 		result, err := store.ListCustomers(ctx, stores.CustomerListFilter{FirstName: fn}, stores.CustomerViewOptions{})
 		require.NoError(t, err)
