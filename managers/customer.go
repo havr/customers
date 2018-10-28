@@ -104,7 +104,7 @@ func (c CustomerManager) validateEmail(errs MultipleErrors, value string) Multip
 	return errs
 }
 
-func (c CustomerManager) validateBirthDate(errs MultipleErrors, birthDate models.Date) MultipleErrors {
+func (c CustomerManager) validateBirthDate(errs MultipleErrors, birthDate time.Time) MultipleErrors {
 	if err := c.validateAgeError(birthDate); err != nil {
 		return append(errs, err)
 	}
@@ -115,7 +115,7 @@ func (c CustomerManager) validateGender(errs MultipleErrors, value models.Gender
 	return c.appendValidationError(errs, "gender", string(value), 0)
 }
 
-func (c CustomerManager) validateAgeError(date models.Date) error {
+func (c CustomerManager) validateAgeError(date time.Time) error {
 	goDate := time.Time(date)
 	if goDate.IsZero() {
 		return fmt.Errorf("age is undefined")

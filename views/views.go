@@ -10,14 +10,19 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/havr/customers/managers"
-	"github.com/havr/customers/models"
 )
 
-const jsDateLayout = "2006-01-02"
+const (
+	jsDateLayout   = "2006-01-02"
+	onlyDateLayout = "02 Jan 06"
+)
 
 var funcMap = template.FuncMap{
-	"jsDate": func(date models.Date) string {
-		return time.Time(date).Format(jsDateLayout)
+	"jsDate": func(date time.Time) string {
+		return date.Format(jsDateLayout)
+	},
+	"onlyDate": func(date time.Time) string {
+		return date.Format(onlyDateLayout)
 	},
 }
 

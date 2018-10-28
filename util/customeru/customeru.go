@@ -13,7 +13,7 @@ import (
 // RandomCustomer generates a valid customer with random life-like data
 func RandomCustomer() models.Customer {
 	customer := models.Customer{
-		BirthDate: models.Date(fakeBirthday(managers.MinCustomerAge, managers.MaxCustomerAge).UTC()),
+		BirthDate: fakeBirthday(managers.MinCustomerAge, managers.MaxCustomerAge).UTC(),
 		Email:     fake.EmailAddress(),
 		Address:   fake.StreetAddress(),
 	}

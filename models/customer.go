@@ -1,8 +1,6 @@
 package models
 
-import (
-	"time"
-)
+import "time"
 
 // Gender is a helper enum that represents customer gender
 type Gender string
@@ -23,20 +21,12 @@ func IsValidGender(gender string) bool {
 
 // Customer represents a basic info for a customer
 type Customer struct {
-	ID        int    `json:"id"`
-	Revision  int    `json:"revision"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	BirthDate Date   `json:"birthDate"`
-	Gender    Gender `json:"gender"`
-	Email     string `json:"email"`
-	Address   string `json:"address"`
-}
-
-// Date is a time.Time with custom String() to display only date, without time
-// This is relevant for template rendering only
-type Date time.Time
-
-func (d Date) String() string {
-	return time.Time(d).Format("02 Jan 06")
+	ID        int       `json:"id"`
+	Revision  int       `json:"revision"`
+	FirstName string    `json:"firstName"`
+	LastName  string    `json:"lastName"`
+	BirthDate time.Time `json:"birthDate"`
+	Gender    Gender    `json:"gender"`
+	Email     string    `json:"email"`
+	Address   string    `json:"address"`
 }

@@ -82,7 +82,7 @@ func (c *customerStore) filterWhere(filter CustomerListFilter, args []interface{
 	var whereConditions []string
 	if filter.FirstName != "" {
 		args = append(args, filter.FirstName+"%")
-		whereConditions = append(whereConditions, fmt.Sprintf("lower(firstName) LIKE lower($%d)", len(args)))
+		whereConditions = append(whereConditions, fmt.Sprintf("lower(firstName) LIKE $%d", len(args)))
 	}
 	if filter.LastName != "" {
 		args = append(args, filter.LastName+"%")

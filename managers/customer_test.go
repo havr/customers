@@ -16,7 +16,7 @@ var (
 	validCustomer = models.Customer{
 		FirstName: "First Name",
 		LastName:  "Last Name",
-		BirthDate: models.Date(time.Now().Add(-30 * 365 * 24 * time.Hour)),
+		BirthDate: time.Now().Add(-30 * 365 * 24 * time.Hour),
 		Gender:    models.Male,
 		Email:     "fake@email.com",
 		Address:   "Address",
@@ -82,13 +82,13 @@ func TestManagerCreateInvalidAge(t *testing.T) {
 
 func tooYoungCustomer() models.Customer {
 	tooYoung := validCustomer
-	tooYoung.BirthDate = models.Date(time.Now().AddDate(-17, 11, 30))
+	tooYoung.BirthDate = time.Now().AddDate(-17, 11, 30)
 	return tooYoung
 }
 
 func tooOldCustomer() models.Customer {
 	tooYoung := validCustomer
-	tooYoung.BirthDate = models.Date(time.Now().AddDate(-61, 0, 0))
+	tooYoung.BirthDate = time.Now().AddDate(-61, 0, 0)
 	return tooYoung
 }
 

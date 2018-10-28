@@ -25,7 +25,7 @@ func (v *views) createCustomerPage(w http.ResponseWriter, r *http.Request) {
 			Title: "Create a Customer",
 		},
 		Customer: models.Customer{
-			BirthDate: models.Date(time.Now().Add(-time.Duration(365*30) * 24 * time.Hour)),
+			BirthDate: time.Now().Add(-time.Duration(365*30) * 24 * time.Hour),
 			Gender:    models.Female,
 		},
 	}
@@ -68,7 +68,7 @@ func (v *views) getCustomer(r *http.Request) (models.Customer, error) {
 		if err != nil {
 			return models.Customer{}, errors.Wrapf(err, "parse birth date")
 		}
-		customer.BirthDate = models.Date(birthDate)
+		customer.BirthDate = birthDate
 	}
 	customer.Address = r.FormValue("address")
 	customer.Email = r.FormValue("email")
