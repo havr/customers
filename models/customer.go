@@ -24,7 +24,7 @@ func IsValidGender(gender string) bool {
 // Customer represents a basic info for a customer
 type Customer struct {
 	ID        int    `json:"id"`
-	Revision  int 	 `json:"revision"`
+	Revision  int    `json:"revision"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	BirthDate Date   `json:"birthDate"`
@@ -36,7 +36,7 @@ type Customer struct {
 // Date is a time.Time with custom String() to display only date, without time
 // This is relevant for template rendering only
 type Date time.Time
+
 func (d Date) String() string {
 	return time.Time(d).Format("02 Jan 06")
 }
-

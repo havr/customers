@@ -14,15 +14,15 @@ import (
 type listData struct {
 	data
 	stores.CustomerViewOptions
-	Filter stores.CustomerListFilter
+	Filter    stores.CustomerListFilter
 	Customers []models.Customer
-	Pages []page
+	Pages     []page
 }
 
 type page struct {
-	Title string
-	Link string
-	Current bool
+	Title    string
+	Link     string
+	Current  bool
 	Disabled bool
 }
 
@@ -53,7 +53,7 @@ func (v *views) listCustomersPage(w http.ResponseWriter, r *http.Request) {
 	}
 	totalPages := int(math.Ceil(float64(total) / float64(pageSize)))
 	if (totalPages > 0 && page > totalPages) || page < 0 {
-		http.Error(w, "invalid page value: " + strconv.Itoa(page), http.StatusInternalServerError)
+		http.Error(w, "invalid page value: "+strconv.Itoa(page), http.StatusInternalServerError)
 		return
 	}
 
@@ -68,7 +68,7 @@ func (v *views) listCustomersPage(w http.ResponseWriter, r *http.Request) {
 	}
 	data.CustomerViewOptions = viewOptions
 	data.Filter = filter
-	data.Pages = v.makePagination(r.URL.Query() , page, totalPages)
+	data.Pages = v.makePagination(r.URL.Query(), page, totalPages)
 	v.executeTemplate(w, "list", data)
 }
 
@@ -90,12 +90,12 @@ func (v *views) makePagination(query url.Values, current int, totalPages int) []
 	end := current + paginationInnerWindow
 	var pages []page
 	pages = append(pages, page{
-		Title: "First",
-		Link: v.pageLink(query, 1),
+		Title:    "First",
+		Link:     v.pageLink(query, 1),
 		Disabled: current == 1,
 	}, page{
-		Title: "Previous",
-		Link: v.pageLink(query, current - 1),
+		Title:    "Previous",
+		Link:     v.pageLink(query, current-1),
 		Disabled: current == 1,
 	})
 
@@ -105,7 +105,7 @@ func (v *views) makePagination(query url.Values, current int, totalPages int) []
 	if end >= totalPages {
 		end = totalPages
 	}
-	for i := start; i <= end; i ++ {
+	for i := start; i <= end; i++ {
 		var p page
 		p.Title = strconv.Itoa(i)
 		if i != current {
@@ -115,12 +115,12 @@ func (v *views) makePagination(query url.Values, current int, totalPages int) []
 		pages = append(pages, p)
 	}
 	pages = append(pages, page{
-		Title: "Next",
-		Link: v.pageLink(query, current + 1),
+		Title:    "Next",
+		Link:     v.pageLink(query, current+1),
 		Disabled: current >= totalPages,
 	}, page{
-		Title: "Last",
-		Link: v.pageLink(query, totalPages),
+		Title:    "Last",
+		Link:     v.pageLink(query, totalPages),
 		Disabled: current >= totalPages,
 	})
 	return pages
@@ -155,4 +155,3 @@ func (v *views) viewOptions(query url.Values) (options stores.CustomerViewOption
 	options.OrderDesc = query.Get("orderDesc") == "true"
 	return
 }
-

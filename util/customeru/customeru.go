@@ -12,8 +12,8 @@ import (
 func RandomCustomer() models.Customer {
 	customer := models.Customer{
 		BirthDate: models.Date(fakeBirthday(managers.MinCustomerAge, managers.MaxCustomerAge).UTC()),
-		Email: fake.EmailAddress(),
-		Address: fake.StreetAddress(),
+		Email:     fake.EmailAddress(),
+		Address:   fake.StreetAddress(),
 	}
 	isFemale := rand.Int31n(2) == 0
 	if isFemale {
@@ -40,5 +40,5 @@ func randomInt64(min, max int64) int64 {
 	if max <= min {
 		return min
 	}
-	return min + rand.Int63n(max - min + 1)
+	return min + rand.Int63n(max-min+1)
 }

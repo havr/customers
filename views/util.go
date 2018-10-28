@@ -7,7 +7,6 @@ import (
 	"strconv"
 )
 
-
 func (v *views) executeTemplate(w http.ResponseWriter, name string, data interface{}) {
 	if err := v.template.ExecuteTemplate(w, name, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -15,7 +14,7 @@ func (v *views) executeTemplate(w http.ResponseWriter, name string, data interfa
 }
 
 func (v *views) id(r *http.Request) int {
-	strID := mux.Vars(r) ["id"]
+	strID := mux.Vars(r)["id"]
 	if strID == "" {
 		return -1
 	}

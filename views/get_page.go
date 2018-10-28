@@ -19,4 +19,3 @@ func (v *views) viewCustomerPage(w http.ResponseWriter, r *http.Request) {
 	}
 	v.executeTemplate(w, "view", data)
 }
-
