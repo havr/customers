@@ -27,7 +27,6 @@ func (v *views) editCustomerPage(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
-		fmt.Println("err is", err)
 		if err == nil {
 			redirect(w, r, "/ui/customer/list")
 			return
