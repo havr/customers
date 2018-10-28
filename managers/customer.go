@@ -3,12 +3,13 @@ package managers
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/badoux/checkmail"
 	"github.com/bearbin/go-age"
 	"github.com/havr/customers/models"
 	"github.com/havr/customers/stores"
-	"strings"
-	"time"
 )
 
 const (

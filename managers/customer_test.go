@@ -2,13 +2,14 @@ package managers_test
 
 import (
 	"context"
+	"strings"
+	"testing"
+	"time"
+
 	"github.com/havr/customers/managers"
 	"github.com/havr/customers/models"
 	"github.com/havr/customers/stores"
 	"github.com/stretchr/testify/require"
-	"strings"
-	"testing"
-	"time"
 )
 
 var (

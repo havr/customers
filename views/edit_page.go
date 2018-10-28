@@ -2,8 +2,9 @@ package views
 
 import (
 	"fmt"
-	"github.com/havr/customers/stores"
 	"net/http"
+
+	"github.com/havr/customers/stores"
 )
 
 func (v *views) editCustomerPage(w http.ResponseWriter, r *http.Request) {

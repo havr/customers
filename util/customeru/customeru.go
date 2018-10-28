@@ -1,11 +1,13 @@
 package customeru
 
 import (
-	"github.com/havr/customers/managers"
-	"github.com/havr/customers/models"
-	"github.com/icrowley/fake"
 	"math/rand"
 	"time"
+
+	"github.com/icrowley/fake"
+
+	"github.com/havr/customers/managers"
+	"github.com/havr/customers/models"
 )
 
 // RandomCustomer generates a valid customer with random life-like data

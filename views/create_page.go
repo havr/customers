@@ -2,13 +2,15 @@ package views
 
 import (
 	"fmt"
-	"github.com/havr/customers/models"
-	"github.com/pkg/errors"
 	"html/template"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/pkg/errors"
+
+	"github.com/havr/customers/models"
 )
 
 type customerData struct {

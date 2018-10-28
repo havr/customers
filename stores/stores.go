@@ -2,6 +2,7 @@ package stores
 
 import (
 	"context"
+
 	"github.com/havr/customers/models"
 )
 

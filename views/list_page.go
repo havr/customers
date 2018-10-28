@@ -2,13 +2,14 @@ package views
 
 import (
 	"fmt"
-	"github.com/havr/customers/models"
-	"github.com/havr/customers/stores"
 	"html/template"
 	"math"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/havr/customers/models"
+	"github.com/havr/customers/stores"
 )
 
 type listData struct {

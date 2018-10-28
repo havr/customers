@@ -4,14 +4,15 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/havr/customers/managers"
-	"github.com/havr/customers/stores"
-	"github.com/havr/customers/views"
-	_ "github.com/lib/pq"
 	"net/http"
 	"os"
 	"os/signal"
 	"path/filepath"
+
+	"github.com/havr/customers/managers"
+	"github.com/havr/customers/stores"
+	"github.com/havr/customers/views"
+	_ "github.com/lib/pq"
 )
 
 var (

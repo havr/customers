@@ -2,13 +2,15 @@ package views
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
-	"github.com/havr/customers/managers"
-	"github.com/havr/customers/models"
 	"html/template"
 	"net/http"
 	"path/filepath"
 	"time"
+
+	"github.com/gorilla/mux"
+
+	"github.com/havr/customers/managers"
+	"github.com/havr/customers/models"
 )
 
 const jsDateLayout = "2006-01-02"

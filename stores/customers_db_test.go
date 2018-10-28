@@ -3,9 +3,6 @@ package stores_test
 import (
 	"context"
 	"fmt"
-	"github.com/havr/customers/models"
-	"github.com/havr/customers/stores"
-	"github.com/havr/customers/util/customeru"
 	"net/url"
 	"os"
 	"sort"
@@ -14,6 +11,10 @@ import (
 
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/require"
+
+	"github.com/havr/customers/models"
+	"github.com/havr/customers/stores"
+	"github.com/havr/customers/util/customeru"
 )
 
 func TestCustomers(t *testing.T) {

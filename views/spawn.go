@@ -1,8 +1,9 @@
 package views
 
 import (
-	"github.com/havr/customers/util/customeru"
 	"net/http"
+
+	"github.com/havr/customers/util/customeru"
 )
 
 func (v *views) handleDataGeneration(w http.ResponseWriter, r *http.Request) {

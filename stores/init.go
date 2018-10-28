@@ -4,9 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/pkg/errors"
 	"net/url"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 const protoPrefix = "postgres://"

@@ -2,9 +2,10 @@ package views
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func (v *views) executeTemplate(w http.ResponseWriter, name string, data interface{}) {
